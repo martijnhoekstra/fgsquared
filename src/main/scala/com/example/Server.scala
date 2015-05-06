@@ -63,7 +63,10 @@ class Hello extends Service[HttpRequest, HttpResponse] {
     val dbUri = new URI(System.getenv("DATABASE_URL"))
     val username = dbUri.getUserInfo.split(":")(0)
     val password = dbUri.getUserInfo.split(":")(1)
-    val dbUrl = s"jdbc:postgresql://${dbUri.getHost}:${dbUri.getPort}${dbUri.getPath}"
+    var dbUrl = s"jdbc:postgresql://${dbUri.getHost}:${dbUri.getPort}${dbUri.getPath}"
+    if (System.getenv("STACK") == null) { // means we're not on Heroku
+      dbUrl = s"${dbUrl}?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory"
+    }
     DriverManager.getConnection(dbUrl, username, password)
   }
 }
