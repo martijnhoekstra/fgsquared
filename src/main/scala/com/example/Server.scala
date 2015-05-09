@@ -29,7 +29,6 @@ object Server {
           case None => Ok("404")
           case Some(stream) => {
             val bytes = getAllBytes(stream);
-            println("got bytes")
             Ok(bytes)
           }
         }
