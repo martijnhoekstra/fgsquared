@@ -25,13 +25,13 @@ object Server {
       case GET -> Root => Ok(net.fgsquared.html.index())
       case GET -> Root / "assets" / "images" / filename => {
         var mstream = resourceStream("public/images/" + filename)
-        mstream match {
-          case None => Ok("404")
-          case Some(stream) => {
-            val bytes = getAllBytes(stream);
-            Ok(bytes)
-          }
-        }
+        mstream.map(stream => Ok(getAllBytes(stream)))
+          .getOrElse(NotFound("image not found"))
+      }
+      case GET -> Root / "assets" / "css" / filename => {
+        var mstream = resourceStream("public/css/" + filename)
+        mstream.map(stream => Ok(getAllBytes(stream)))
+          .getOrElse(NotFound("stylesheet not found"))
       }
 
     }
