@@ -1,3 +1,5 @@
+import NativePackagerKeys._
+
 name := "fg2"
 
 version := "0.1-SNAPSHOT"
@@ -30,3 +32,5 @@ Revolver.settings
 scalariformSettings
 
 lazy val root = (project in file(".")).enablePlugins(SbtTwirl)
+
+packageArchetype.java_application
