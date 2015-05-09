@@ -1,7 +1,3 @@
-import NativePackagerKeys._
-
-packageArchetype.java_application
-
 name := "fg2"
 
 version := "0.1-SNAPSHOT"
