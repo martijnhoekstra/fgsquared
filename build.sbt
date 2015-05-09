@@ -29,8 +29,18 @@ libraryDependencies ++= Seq(
 
 Revolver.settings
 
+Revolver.reStart <<= Revolver.reStart.dependsOn(WebKeys.assets in Assets)
+
+Revolver.reStart <<= Revolver.reStart.dependsOn(NativePackagerKeys.stage)
+
+WebKeys.packagePrefix in Assets := "public/"
+
+(managedClasspath in Runtime) += (packageBin in Assets).value
+
 scalariformSettings
 
-lazy val root = (project in file(".")).enablePlugins(SbtTwirl)
+lazy val root = (project in file("."))
+.enablePlugins(SbtTwirl)
+.enablePlugins(SbtWeb)
 
 packageArchetype.java_application
