@@ -9,6 +9,7 @@ import org.http4s._
 import org.http4s.server._
 import org.http4s.dsl._
 import org.http4s.twirl._
+import org.http4s.headers.`Content-Type`
 
 object Server {
 
@@ -30,7 +31,8 @@ object Server {
       }
       case GET -> Root / "assets" / "css" / filename => {
         var mstream = resourceStream("public/css/" + filename)
-        mstream.map(stream => Ok(getAllBytes(stream)))
+        var contentType = `Content-Type`(MediaType.forExtension("css").get)
+        mstream.map(stream => Ok(getAllBytes(stream)).map(resp => resp.putHeaders(contentType)))
           .getOrElse(NotFound("stylesheet not found"))
       }
 

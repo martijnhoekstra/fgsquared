@@ -1,7 +1,18 @@
+body {
+  min-height:100%;
+}
 .tinylink {
   padding:2px 0px 4px;
   display:block;
   font-weight:lighter;
   font-size:smaller;
   text-decoration:underline;
+}
+
+footer {
+  height:60px;
+}
+.copyrightnotice {
+  display:block;
+  font-size:smaller;
 }
