@@ -18,9 +18,10 @@ object Server {
 
     val fgsserver = HttpService {
       case GET -> Root => Ok(net.fgsquared.html.index())
+
     }
 
-    BlazeBuilder.bindHttp(port)
+    BlazeBuilder.bindHttp(port, "0.0.0.0")
       .mountService(fgsserver, "/")
       .run
       .awaitShutdown()
