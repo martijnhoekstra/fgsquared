@@ -7,3 +7,5 @@ addSbtPlugin("com.typesafe.sbt" % "sbt-scalariform" % "1.3.0")
 addSbtPlugin("com.typesafe.sbt" % "sbt-twirl" % "1.0.4")
 
 addSbtPlugin("com.typesafe.sbt" % "sbt-web" % "1.2.0")
+
+addSbtPlugin("com.typesafe.sbt" % "sbt-less" % "1.0.6")

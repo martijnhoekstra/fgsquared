@@ -30,7 +30,7 @@ object Server {
           .getOrElse(NotFound("image not found"))
       }
       case GET -> Root / "assets" / "css" / filename => {
-        var mstream = resourceStream("public/css/" + filename)
+        var mstream = resourceStream("public/" + filename)
         var contentType = `Content-Type`(MediaType.forExtension("css").get)
         mstream.map(stream => Ok(getAllBytes(stream)).map(resp => resp.putHeaders(contentType)))
           .getOrElse(NotFound("stylesheet not found"))
