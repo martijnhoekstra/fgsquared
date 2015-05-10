@@ -8,7 +8,8 @@ scalaVersion := "2.11.6"
 
 resolvers ++= Seq(
   "tpolecat" at "http://dl.bintray.com/tpolecat/maven",
-  "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases"
+  "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases",
+  "Typesafe bintray maven" at "http://dl.bintray.com/typesafe/maven-releases/com/typesafe/"
 )
 
 lazy val doobieversion = "0.2.2-SNAPSHOT" //publish-local from shapeless 2.2.0 branch; this is needed to not break stuff
