@@ -6,6 +6,8 @@ version := "0.1-SNAPSHOT"
 
 scalaVersion := "2.11.6"
 
+scalacOptions in ThisBuild ++= Seq("-unchecked", "-deprecation", "-feature")
+
 resolvers ++= Seq(
   "tpolecat" at "http://dl.bintray.com/tpolecat/maven",
   "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases",

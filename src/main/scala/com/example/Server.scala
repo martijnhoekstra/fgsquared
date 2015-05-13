@@ -45,6 +45,6 @@ object Server {
   }
 
   def getAllBytes(is: java.io.InputStream): Array[Byte] = {
-    Stream.continually(is.read).takeWhile(-1 !=).map(_.toByte).toArray
+    Stream.continually(is.read).takeWhile(x => -1 != x).map(_.toByte).toArray
   }
 }
