@@ -1,1 +1,1 @@
-web: target/universal/stage/bin/fg2
+web: website/target/universal/stage/bin/website

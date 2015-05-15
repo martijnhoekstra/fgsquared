@@ -1,5 +1,3 @@
-import NativePackagerKeys._
-
 lazy val commonSettings = Seq(
   organization := "net.fgsquad",
   version := "0.1-SNAPSHOT",
@@ -7,16 +5,22 @@ lazy val commonSettings = Seq(
   scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
 )
 
-lazy val website = (project in file("website"))
+lazy val website = (project in file("./website"))
 .enablePlugins(SbtTwirl)
 .enablePlugins(SbtWeb)
+.enablePlugins(JavaAppPackaging)
+.settings(commonSettings)
+.settings(Revolver.settings)
 
-lazy val bootstrap = (project in file("bootstrap"))
+lazy val bootstrap = (project in file("./bootstrap"))
 .enablePlugins(SbtWeb)
+.enablePlugins(JavaAppPackaging)
+.settings(commonSettings)
 
 lazy val fg2 = (project in file("."))
 .aggregate(bootstrap, website)
-
+.enablePlugins(JavaAppPackaging)
+.settings(commonSettings)
 
 resolvers in Global ++= Seq(
   "tpolecat" at "http://dl.bintray.com/tpolecat/maven",
@@ -40,17 +44,18 @@ libraryDependencies in ThisBuild ++= Seq(
 "org.slf4j"     % "slf4j-simple"              % "1.7.7"
 )
 
+//Revolver.settings
 
-Revolver.settings
+//Revolver.reStart <<= Revolver.reStart.dependsOn(WebKeys.assets in Assets in website)
 
-Revolver.reStart <<= Revolver.reStart.dependsOn(WebKeys.assets in Assets in website)
+//Revolver.reStart <<= Revolver.reStart.dependsOn(NativePackagerKeys.stage)
 
-Revolver.reStart <<= Revolver.reStart.dependsOn(NativePackagerKeys.stage)
+stage in fg2 <<= (stage in fg2).dependsOn(stage in website)
 
 WebKeys.packagePrefix in Assets := "public/"
 
 (managedClasspath in Runtime) += (packageBin in Assets in website).value
 
-scalariformSettings
+(managedClasspath in Runtime) += (packageBin in Assets in bootstrap).value
 
-packageArchetype.java_application
+scalariformSettings
