@@ -18,7 +18,7 @@ lazy val fg2 = (project in file("."))
 .aggregate(bootstrap, website)
 
 
-resolvers ++= Seq(
+resolvers in Global ++= Seq(
   "tpolecat" at "http://dl.bintray.com/tpolecat/maven",
   "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases",
   "Typesafe bintray maven" at "http://dl.bintray.com/typesafe/maven-releases/com/typesafe/"
