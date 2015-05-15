@@ -1,12 +1,22 @@
 import NativePackagerKeys._
 
-name := "fg2"
+lazy val commonSettings = Seq(
+  organization := "net.fgsquad",
+  version := "0.1-SNAPSHOT",
+  scalaVersion := "2.11.6",
+  scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
+)
 
-version := "0.1-SNAPSHOT"
+lazy val website = (project in file("website"))
+.enablePlugins(SbtTwirl)
+.enablePlugins(SbtWeb)
 
-scalaVersion := "2.11.6"
+lazy val bootstrap = (project in file("bootstrap"))
+.enablePlugins(SbtWeb)
 
-scalacOptions in ThisBuild ++= Seq("-unchecked", "-deprecation", "-feature")
+lazy val fg2 = (project in file("."))
+.aggregate(bootstrap, website)
+
 
 resolvers ++= Seq(
   "tpolecat" at "http://dl.bintray.com/tpolecat/maven",
@@ -18,7 +28,7 @@ lazy val doobieversion = "0.2.2-SNAPSHOT" //publish-local from shapeless 2.2.0 b
 
 lazy val http4sversion = "0.7.0"
 
-libraryDependencies ++= Seq(
+libraryDependencies in ThisBuild ++= Seq(
 "org.http4s"   %% "http4s-dsl"                % http4sversion, 
 "org.http4s"   %% "http4s-blazeserver"        % http4sversion, 
 "org.http4s"   %% "http4s-json4s"             % http4sversion,     
@@ -30,20 +40,17 @@ libraryDependencies ++= Seq(
 "org.slf4j"     % "slf4j-simple"              % "1.7.7"
 )
 
+
 Revolver.settings
 
-Revolver.reStart <<= Revolver.reStart.dependsOn(WebKeys.assets in Assets)
+Revolver.reStart <<= Revolver.reStart.dependsOn(WebKeys.assets in Assets in website)
 
 Revolver.reStart <<= Revolver.reStart.dependsOn(NativePackagerKeys.stage)
 
 WebKeys.packagePrefix in Assets := "public/"
 
-(managedClasspath in Runtime) += (packageBin in Assets).value
+(managedClasspath in Runtime) += (packageBin in Assets in website).value
 
 scalariformSettings
-
-lazy val root = (project in file("."))
-.enablePlugins(SbtTwirl)
-.enablePlugins(SbtWeb)
 
 packageArchetype.java_application

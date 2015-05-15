@@ -1,4 +1,4 @@
-package net.fgsquared
+package net.fgsquad
 
 import scala.util.Properties
 
@@ -23,7 +23,7 @@ object Server {
     }
 
     val fgsserver = HttpService {
-      case GET -> Root => Ok(net.fgsquared.html.index())
+      case GET -> Root => Ok(net.fgsquad.html.index())
       case GET -> Root / "assets" / "images" / filename => {
         var mstream = resourceStream("public/images/" + filename)
         mstream.map(stream => Ok(getAllBytes(stream)))
