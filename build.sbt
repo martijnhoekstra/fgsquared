@@ -52,7 +52,7 @@ libraryDependencies in ThisBuild ++= Seq(
 
 stage in fg2 <<= (stage in fg2).dependsOn(stage in website)
 
-WebKeys.packagePrefix in Assets := "public/"
+WebKeys.packagePrefix in Assets in website := "public/"
 
 (managedClasspath in Runtime) += (packageBin in Assets in website).value
 
