@@ -1,4 +1,4 @@
-package net.fgsqad
+package net.fgsquad
 
 object Authentication {
 
