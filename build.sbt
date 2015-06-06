@@ -11,6 +11,7 @@ lazy val bootstrap = (project in file("./bootstrap"))
   JavaAppPackaging)
 .settings(
   (managedClasspath in Runtime) += (packageBin in Assets).value
+  
 )
 
 lazy val website = (project in file("./website"))
