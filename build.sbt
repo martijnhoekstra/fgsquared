@@ -5,27 +5,33 @@ lazy val commonSettings = Seq(
   scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
 )
 
-lazy val website = (project in file("./website"))
-.enablePlugins(SbtTwirl)
-.enablePlugins(SbtWeb)
-.enablePlugins(JavaAppPackaging)
-.settings(commonSettings)
-.settings(Revolver.settings)
-.settings(scalariformSettings)
-.settings((managedClasspath in Runtime) += (packageBin in Assets).value)
-.settings(Revolver.reStart <<= Revolver.reStart.dependsOn(WebKeys.assets in Assets))
-.dependsOn(bootstrap)
-
 lazy val bootstrap = (project in file("./bootstrap"))
-.enablePlugins(SbtWeb)
-.enablePlugins(JavaAppPackaging)
-.settings(commonSettings)
-.settings((managedClasspath in Runtime) += (packageBin in Assets).value)
+.enablePlugins(
+  SbtWeb,
+  JavaAppPackaging)
+.settings(
+  (managedClasspath in Runtime) += (packageBin in Assets).value
+)
+
+lazy val website = (project in file("./website"))
+.enablePlugins(
+  SbtTwirl,
+  SbtWeb,
+  JavaAppPackaging)
+.settings(
+  commonSettings,
+  Revolver.settings,
+  scalariformSettings,
+  (managedClasspath in Runtime) += (packageBin in Assets).value,
+  Revolver.reStart <<= Revolver.reStart.dependsOn(WebKeys.nodeModules in Assets)
+)
+
+
 
 lazy val fg2 = (project in file("."))
-.aggregate(bootstrap, website)
-.enablePlugins(JavaAppPackaging)
-.settings(commonSettings)
+  .aggregate(bootstrap, website)
+  .enablePlugins(JavaAppPackaging)
+  .settings(commonSettings)
 
 resolvers in Global ++= Seq(
   "tpolecat" at "http://dl.bintray.com/tpolecat/maven",
